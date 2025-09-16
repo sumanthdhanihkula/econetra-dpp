@@ -1,0 +1,4 @@
+async def add_invoice(data: dict) -> dict:
+    result = await invoice_collection.insert_one(data)
+    created_invoice = await invoice_collection.find_one({"_id": result.inserted_id})
+    return created_invoice

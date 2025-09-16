@@ -1,0 +1,18 @@
+@app.post("/extract-invoice")
+async def extract_invoice(file: UploadFile = File(...)):
+    content = await file.read()
+    if file.filename.lower().endswith(".pdf"):
+        import io
+        pdf_bytes = io.BytesIO(content)
+        text = extract_text_from_pdf(pdf_bytes)
+    else:
+        text = extract_text_from_image(content)
+    data = parse_invoice_text(text)
+
+    saved_invoice = await add_invoice(data)
+
+    return {
+        "extracted_data": data,
+        "raw_text": text,
+        "saved_invoice": saved_invoice
+    }

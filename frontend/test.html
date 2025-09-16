@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>DPP Test Form</title>
+</head>
+<body>
+  <h1>Test DPP Form</h1>
+
+  <!-- Form to add new DPP -->
+  <form id="dppForm">
+    <label>Name:</label>
+    <input type="text" id="name" required><br><br>
+
+    <label>Category:</label>
+    <input type="text" id="category" required><br><br>
+
+    <label>Status:</label>
+    <input type="text" id="status" required><br><br>
+
+    <button type="submit">Add DPP</button>
+  </form>
+
+  <hr>
+
+  <!-- Button to fetch all DPPs -->
+  <button id="listBtn">List All DPPs</button>
+
+  <h2>Response:</h2>
+  <pre id="response"></pre>
+
+  <script>
+    const apiUrl = "http://127.0.0.1:8000/dpp";
+
+    // Handle form submission
+    document.getElementById("dppForm").onsubmit = async (e) => {
+      e.preventDefault();
+
+      const data = {
+        name: document.getElementById("name").value,
+        category: document.getElementById("category").value,
+        status: document.getElementById("status").value,
+      };
+
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      document.getElementById("response").textContent = JSON.stringify(await res.json(), null, 2);
+    };
+
+    // Handle "List All DPPs"
+    document.getElementById("listBtn").onclick = async () => {
+      const res = await fetch(apiUrl);
+      document.getElementById("response").textContent = JSON.stringify(await res.json(), null, 2);
+    };
+  </script>
+</body>
+</html>
