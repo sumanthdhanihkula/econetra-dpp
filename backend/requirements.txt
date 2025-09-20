@@ -1,13 +1,6 @@
 fastapi
 uvicorn
-python-multipart
-pillow
 pytesseract
+pillow
+python-multipart
 openai
-motor
-python-jose[cryptography]
-passlib[bcrypt]
-python-dotenv
-email-validator
-pydantic
-boto3
